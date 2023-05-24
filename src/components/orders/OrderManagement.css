@@ -1,0 +1,35 @@
+.order-management {
+    margin-top: 100px;
+}
+
+.ant-table-content {
+    display: flex;
+    justify-content: center;
+}
+
+.ant-table-wrapper table {
+    /* width: 80%; */
+    text-align: center;
+    zoom: 90%;
+}
+
+.ant-table-wrapper .ant-table-container table >thead >tr >th {
+    text-align: center;
+}
+
+.ant-pagination {
+    float: right;
+}
+
+.ant-space-vertical{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 50px 10px 0px;
+}
+
+.ant-typography {
+    position: relative;
+    left: 600px;
+}

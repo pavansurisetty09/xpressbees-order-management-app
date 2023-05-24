@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Login from "./components/Login/Login";
+import Navbar from "./components/Navbar/Navbar";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import OrderManagement from "./components/orders/OrderManagement";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { authenticateUser } from "./actions/AuthAction";
 
 function App() {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state) => state.authentication.isUserAuthenticated
+  );
+
+  useEffect(() => {
+    const isUserAuthenticated = localStorage.getItem("loggedInUser");
+    if (isUserAuthenticated) {
+      dispatch(authenticateUser(true));
+    }
+  }, [dispatch]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navbar isAuthenticated={isAuthenticated} />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route
+            path="/orders"
+            element={
+              <ProtectedRoute isAuthenticated={isAuthenticated}>
+                <OrderManagement />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
