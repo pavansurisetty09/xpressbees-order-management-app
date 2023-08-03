@@ -7,12 +7,24 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { authenticateUser } from "./actions/AuthAction";
+import ReactGA from "react-ga4";
+
+const TRACKING_ID = "G-65MWCL2D9W";
+ReactGA.initialize(TRACKING_ID);
 
 function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
     (state) => state.authentication.isUserAuthenticated
   );
+
+  useEffect(() => {
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname + window.location.search,
+      title: "Home Page",
+    });
+  }, []);
 
   useEffect(() => {
     const isUserAuthenticated = localStorage.getItem("loggedInUser");
